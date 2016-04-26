@@ -16,7 +16,8 @@ angular.module("angular-growl").provider("growl", function () {
     _disableIcons = false,
     _reverseOrder = false,
     _disableCountDown = false,
-    _translateMessages = true;
+    _translateMessages = true,
+    _clickToClose = true;
 
   /**
    * set a global timeout (time to live) after which messages will be automatically closed
@@ -242,6 +243,7 @@ angular.module("angular-growl").provider("growl", function () {
         position: _config.position || _position,
         referenceId: _config.referenceId || _referenceId,
         translateMessage: _config.translateMessage === undefined ? _translateMessages : _config.translateMessage,
+        clickToClose: _config.clickToClose === undefined ? _clickToClose : _config.clickToClose,
         destroy: function () {
           growlMessages.deleteMessage(message);
         },

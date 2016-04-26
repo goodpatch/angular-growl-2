@@ -1,7 +1,7 @@
 /**
- * angular-growl-v2 - v0.7.8 - 2015-10-25
+ * angular-growl-v2 - v0.7.9 - 2016-04-27
  * http://janstevens.github.io/angular-growl-2
- * Copyright (c) 2015 Marco Rinck,Jan Stevens,Silvan van Leeuwen; Licensed MIT
+ * Copyright (c) 2016 Marco Rinck,Jan Stevens,Silvan van Leeuwen; Licensed MIT
  */
 angular.module('angular-growl', []);
 angular.module('angular-growl').directive('growl', [function () {
@@ -32,7 +32,7 @@ angular.module('angular-growl').directive('growl', [function () {
             }
           });
           $scope.stopTimeoutClose = function (message) {
-            if (!message.clickToClose) {
+            if (message.clickToClose) {
               angular.forEach(message.promises, function (promise) {
                 $interval.cancel(promise);
               });
@@ -92,7 +92,7 @@ angular.module('angular-growl').provider('growl', function () {
       error: null,
       warning: null,
       info: null
-    }, _messagesKey = 'messages', _messageTextKey = 'text', _messageTitleKey = 'title', _messageSeverityKey = 'severity', _messageTTLKey = 'ttl', _onlyUniqueMessages = true, _messageVariableKey = 'variables', _referenceId = 0, _inline = false, _position = 'top-right', _disableCloseButton = false, _disableIcons = false, _reverseOrder = false, _disableCountDown = false, _translateMessages = true;
+    }, _messagesKey = 'messages', _messageTextKey = 'text', _messageTitleKey = 'title', _messageSeverityKey = 'severity', _messageTTLKey = 'ttl', _onlyUniqueMessages = true, _messageVariableKey = 'variables', _referenceId = 0, _inline = false, _position = 'top-right', _disableCloseButton = false, _disableIcons = false, _reverseOrder = false, _disableCountDown = false, _translateMessages = true, _clickToClose = true;
   this.globalTimeToLive = function (ttl) {
     if (typeof ttl === 'object') {
       for (var k in ttl) {
@@ -229,6 +229,7 @@ angular.module('angular-growl').provider('growl', function () {
           position: _config.position || _position,
           referenceId: _config.referenceId || _referenceId,
           translateMessage: _config.translateMessage === undefined ? _translateMessages : _config.translateMessage,
+          clickToClose: _config.clickToClose === undefined ? _clickToClose : _config.clickToClose,
           destroy: function () {
             growlMessages.deleteMessage(message);
           },
